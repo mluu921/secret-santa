@@ -66,21 +66,21 @@ vbs <- list(
     value = textOutput('iterations'),
     showcase = bs_icon("sort-up"),
     height = 150,
-    theme = 'primary'
+    theme_color = 'primary'
   ),
   value_box(
     title = 'Total Participants',
     value = textOutput('participants'),
     showcase = bs_icon("people-fill"),
     height = 150,
-    theme = 'secondary'
+    theme_color = 'secondary'
   ),
   value_box(
     title = 'Days Until Christmas',
     value = h3(countdown),
     showcase = bs_icon("calendar-date"),
     height = 150,
-    theme = 'info'
+    theme_color = 'info'
   )
   
 )
@@ -90,6 +90,8 @@ ui <- bslib::page_sidebar(
   title = "Secret Santa Randomizer",
   fillable = FALSE,
   sidebar = sidebar(
+    open = 'open',
+    width = '300px',
     selectizeInput(
       inputId = "participants",
       label = "Participants",
