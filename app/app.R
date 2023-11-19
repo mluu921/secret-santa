@@ -36,10 +36,17 @@ secret_santa_randomizer <-
       
     }) |> eval()
     
+    data <- data |> 
+      mutate(
+        text = glue::glue("{giver} will be giving a gift to {recipients}."))
+    
     tibble::lst(data,
                 i)
     
   }
+
+
+# t <- secret_santa_randomizer(random_names)
 
 if(Sys.Date() > mdy(paste0('12-25', year(Sys.Date())))) {
   
@@ -73,20 +80,20 @@ vbs <- list(
     value = textOutput('participants'),
     showcase = bs_icon("people-fill"),
     height = 150,
-    theme_color = 'secondary'
+    theme_color = 'danger'
   ),
   value_box(
     title = 'Days Until Christmas',
     value = h3(countdown),
     showcase = bs_icon("calendar-date"),
     height = 150,
-    theme_color = 'info'
+    theme_color = 'success'
   )
   
 )
 
 ui <- bslib::page_sidebar(
-  theme = bslib::bs_theme(version = 5, bootswatch = "minty"),
+  theme = bslib::bs_theme(version = 5, bootswatch = "simplex"),
   title = "Secret Santa Randomizer",
   fillable = FALSE,
   sidebar = sidebar(
@@ -134,9 +141,14 @@ server <- function(input, output, session) {
     
     results()$data |> 
       gt() |> 
+      cols_hide(columns = c(giver, recipients)) |>
+      cols_align(align = "left", columns = c(text, results)) |>
+      opt_interactive(use_compact_mode = TRUE,
+                      page_size_default = 15) |> 
       cols_label(giver = "Giver",
                  recipients = "Recipients",
-                 results = "Results")
+                 results = "Results",
+                 text = 'Summary')
     
   })
   
