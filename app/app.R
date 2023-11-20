@@ -101,7 +101,7 @@ ui <- bslib::page_sidebar(
     width = '300px',
     selectizeInput(
       inputId = "participants",
-      label = "Participants",
+      label = tooltip(list(h4("Secret Santa Participants"), bs_icon("info-circle")), "Please add the participant names to the list for radomization"),
       choices = random_names,
       selected = random_names,
       options = list(create = TRUE),
@@ -109,9 +109,9 @@ ui <- bslib::page_sidebar(
     ),
     selectizeInput(
       inputId = "additional_criteria",
-      label = "Additional Exclusion Criteria",
+      label = tooltip(list(h4("Randomization Exclusion Rules"), bs_icon("info-circle")), "Please add any additional exclusion rules to the list for radomization (e.g. 'John -> Mary'). This will add the rule to prevent John from matching with Mary for Secret Santa. Rules are structured as 'Giver -> Recipient'. The randomizer will continue to run until all rules are satisfied."),
       choices = NULL,
-      options = list(create = TRUE),
+      options = list(create = TRUE, placeholder = "e.g. John -> Mary"),
       multiple = TRUE
     ),
     actionButton(
